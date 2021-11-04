@@ -1,6 +1,4 @@
-require('aframe');
-
-aframe.registerComponent("audiohandler", {
+AFRAME.registerComponent("audiohandler", {
   schema: {
     id: { default: "none" }
   },
