@@ -1,0 +1,20 @@
+{
+  "name": "webxr-sonification",
+  "version": "1.0.0",
+  "description": "Sonification experiment using ocean data in VR",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aframe": "^1.2.0",
+    "tone": "^14.7.77"
+  },
+  "devDependencies": {
+    "webpack": "^5.61.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
