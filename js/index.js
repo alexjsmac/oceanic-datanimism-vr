@@ -13,7 +13,7 @@ AFRAME.registerComponent("audiohandler", {
       console.log('audio is ready')
       var data;
       var notes = ["F2", "G2", "A3", "B3", "C3", "D3", "E3", "F3", "G3", "A4", "B4", "C4", "D4", "E4", "F4", "G4"];
-      Papa.parse('../data/epa-sea-level.csv', {
+      Papa.parse('https://raw.githubusercontent.com/datasets/sea-level-rise/master/data/epa-sea-level.csv', {
         header: true,
         download: true,
         dynamicTyping: true,
