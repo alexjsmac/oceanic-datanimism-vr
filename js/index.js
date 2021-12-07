@@ -12,10 +12,11 @@ AFRAME.registerComponent("audiohandler", {
         const mainMelodyPart = new Tone.Part(function (time, note) {
           synth2.triggerAttackRelease(note.note, note.duration, time);
         }, mainMelody).start(0);
+        Tone.start();
         Tone.Transport.start();
       } else {
-        Tone.Transport.stop();
         console.log("Stopping playback");
+        Tone.Transport.stop();
       }
     });
   },
