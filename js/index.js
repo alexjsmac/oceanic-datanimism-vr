@@ -18,6 +18,9 @@ AFRAME.registerComponent("audiohandler", {
         console.log("Stopping playback");
         Tone.Transport.stop();
       }
+
+      beginText = document.querySelector("#begin-text");
+      beginText.setAttribute("visible", false);
     });
   },
 });
