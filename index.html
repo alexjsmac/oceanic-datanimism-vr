@@ -61,13 +61,9 @@
         text-geometry="value: Click to Begin"
       ></a-entity>
 
-      <!-- Hands. -->
-      <a-entity id="leftHand" hand-controls="hand: left"></a-entity>
-      <a-entity id="rightHand" hand-controls="hand: right"></a-entity>
-
       <!-- Camera. -->
-      <a-entity id="rig" movement-controls>
-        <a-camera>
+      <a-entity id="rig">
+        <a-camera wasd-controls-enabled="false">
           <a-cursor></a-cursor>
         </a-camera>
       </a-entity>
