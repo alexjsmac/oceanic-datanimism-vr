@@ -1,26 +1,24 @@
-Tone.Transport.bpm.value = 150;
+Tone.Transport.bpm.value = 60;
 
 // Melody //
 
 let mainMelody = Array();
-const notes = [
-  "F2",
-  "G2",
-  "A3",
-  "B3",
-  "C3",
-  "D3",
-  "E3",
-  "F3",
-  "G3",
-  "A4",
-  "B4",
-  "C4",
-  "D4",
-  "E4",
-  "F4",
-  "G4",
+const scale = [
+  "F",
+  "Gb",
+  "Ab",
+  "Bb",
+  "C",
+  "Db",
+  "Eb"
 ];
+var notes = Array();
+for (let i = 1; i < 7; i++) {
+  scale.forEach((element) => {
+    let note = element + i.toString();
+    notes.push(note);
+  });
+}
 Papa.parse(
   "https://raw.githubusercontent.com/datasets/sea-level-rise/master/data/epa-sea-level.csv",
   {
@@ -30,27 +28,42 @@ Papa.parse(
     complete: function (results) {
       data = results.data;
       let bar = 0;
-      for (let i = 0; i < data.length - 1; i++) {
-        let note = Math.round(data[i]["CSIRO Adjusted Sea Level"]) + 1;
+      for (let i = 0; i < data.length - 2; i++) {
+        let year = data[i]["Year"];
+        let note = Math.round((data[i]["CSIRO Adjusted Sea Level"]+1)*4);
         let beat = (i % 2) * 2;
         if (i != 0 && beat == 0) {
           bar += 1;
         }
         time = bar.toString() + ":" + beat.toString();
-        mainMelody.push({ time: time, note: notes[note], duration: "4n" });
+        mainMelody.push({year: year, time: time, note: notes[note], duration: "2n" });
       }
     },
   }
 );
 
-const synth2 = new Tone.Synth({
+const synth = new Tone.Synth({
   oscillator: {
     volume: 5,
     count: 3,
     spread: 40,
     type: "fatsawtooth",
   },
+})
+const filter = new Tone.Filter(400, 'lowpass').toDestination();
+const feedbackDelay = new Tone.FeedbackDelay(0.25, 0.75).toDestination();
+
+synth.connect(filter);
+filter.connect(feedbackDelay);
+
+const panner = new Tone.Panner3D({
+  panningModel: "HRTF",
+  positionX: 0,
+  positionY: 0,
+  positionZ: 50,
 }).toDestination();
+feedbackDelay.connect(panner);
+
 
 // Kick Drum //
 
@@ -90,6 +103,6 @@ for (let i = 0; i < 8; i++) {
   });
 }
 
-const kickPart = new Tone.Part(function (time) {
-  kickDrum.triggerAttackRelease("C1", "8n", time);
-}, fullKicks).start(0);
+// const kickPart = new Tone.Part(function (time) {
+//   kickDrum.triggerAttackRelease("C1", "8n", time);
+// }, fullKicks).start(0);

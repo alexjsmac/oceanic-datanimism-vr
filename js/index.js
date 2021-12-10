@@ -10,7 +10,8 @@ AFRAME.registerComponent("audiohandler", {
       if (Tone.Transport.state !== "started") {
         console.log("Starting playback");
         const mainMelodyPart = new Tone.Part(function (time, note) {
-          synth2.triggerAttackRelease(note.note, note.duration, time);
+          console.log(note);
+          synth.triggerAttackRelease(note.note, note.duration, time);
         }, mainMelody).start(0);
         Tone.start();
         Tone.Transport.start();
