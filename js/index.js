@@ -9,9 +9,11 @@ AFRAME.registerComponent("audiohandler", {
 
       if (Tone.Transport.state !== "started") {
         console.log("Starting playback");
+        let text = document.querySelector("#begin-text");
         const mainMelodyPart = new Tone.Part(function (time, note) {
           console.log(note);
           synth.triggerAttackRelease(note.note, note.duration, time);
+          text.setAttribute("text-geometry", "value: " + note.year);
         }, mainMelody).start(0);
         Tone.start();
         Tone.Transport.start();
@@ -19,9 +21,6 @@ AFRAME.registerComponent("audiohandler", {
         console.log("Stopping playback");
         Tone.Transport.stop();
       }
-
-      beginText = document.querySelector("#begin-text");
-      beginText.setAttribute("visible", false);
     });
   },
 });

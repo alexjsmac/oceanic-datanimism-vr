@@ -12,7 +12,7 @@ const scale = [
   "Db",
   "Eb"
 ];
-var notes = Array();
+let notes = Array();
 for (let i = 1; i < 7; i++) {
   scale.forEach((element) => {
     let note = element + i.toString();
@@ -26,16 +26,16 @@ Papa.parse(
     download: true,
     dynamicTyping: true,
     complete: function (results) {
-      data = results.data;
+      let data = results.data;
       let bar = 0;
       for (let i = 0; i < data.length - 2; i++) {
         let year = data[i]["Year"];
         let note = Math.round((data[i]["CSIRO Adjusted Sea Level"]+1)*4);
         let beat = (i % 2) * 2;
-        if (i != 0 && beat == 0) {
+        if (i !== 0 && beat === 0) {
           bar += 1;
         }
-        time = bar.toString() + ":" + beat.toString();
+        let time = bar.toString() + ":" + beat.toString();
         mainMelody.push({year: year, time: time, note: notes[note], duration: "2n" });
       }
     },
@@ -56,14 +56,10 @@ const feedbackDelay = new Tone.FeedbackDelay(0.25, 0.75).toDestination();
 synth.connect(filter);
 filter.connect(feedbackDelay);
 
-const panner = new Tone.Panner3D({
-  panningModel: "HRTF",
-  positionX: 0,
-  positionY: 0,
-  positionZ: 50,
-}).toDestination();
-feedbackDelay.connect(panner);
-
+filter.frequency.setTargetAtTime(1000, "2:0", 2);
+filter.frequency.setTargetAtTime(400, "4:0", 2);
+filter.frequency.setTargetAtTime(1500, "8:0", 1);
+filter.frequency.setTargetAtTime(400, "10:0", 1);
 
 // Kick Drum //
 
@@ -103,6 +99,44 @@ for (let i = 0; i < 8; i++) {
   });
 }
 
-// const kickPart = new Tone.Part(function (time) {
-//   kickDrum.triggerAttackRelease("C1", "8n", time);
-// }, fullKicks).start(0);
+const kickPart = new Tone.Part(function (time) {
+  kickDrum.triggerAttackRelease("C1", "8n", time);
+}, fullKicks).start(0);
+
+// Snare Drum //
+
+const lowPass = new Tone.Filter({
+  frequency: 1000,
+}).toDestination();
+
+const snareDrum = new Tone.NoiseSynth({
+  noise: {
+    type: 'white',
+    playbackRate: 3,
+  },
+  envelope: {
+    attack: 0.001,
+    decay: 0.20,
+    sustain: 0.15,
+    release: 0.03,
+  },
+}).connect(lowPass);
+
+const snareDelay = new Tone.FeedbackDelay(0.25, 0.75).toDestination();
+
+lowPass.connect(snareDelay);
+
+const snares = [
+  { time: '10:2' },
+  { time: '11:2' },
+  { time: '12:2' },
+  { time: '13:2' },
+  { time: '14:2' },
+  { time: '15:2' },
+  { time: '16:2' },
+  { time: '17:2' },
+]
+
+const snarePart = new Tone.Part(function(time){
+  snareDrum.triggerAttackRelease('4n', time)
+}, snares).start(0);
