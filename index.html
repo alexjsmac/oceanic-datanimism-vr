@@ -19,6 +19,12 @@
           src="https://i.imgur.com/mYmmbrp.jpg"
           crossorigin="anonymous"
         />
+        <audio
+          id="background"
+          src="https://cdn.aframe.io/basic-guide/audio/backgroundnoise.wav"
+          crossorigin="anonymous"
+          preload="auto"
+        ></audio>
       </a-assets>
 
       <a-sky></a-sky>
@@ -59,6 +65,20 @@
         position="-2 5 -20"
         text-geometry="value: Click to Begin"
       ></a-entity>
+
+
+      <a-box
+        id="box2"
+        src="#boxTexture"
+        position="5 -2 -20"
+        rotation="0 45 45"
+        scale="0 0 0"
+        animation__position="property: object3D.position.y; to: -2.2; dir: alternate; dur: 2000; loop: true"
+        animation__mousedown="property: object3D.position.z; to: 1000; dur: 10000; startEvents: mousedown"
+        animation__appear="property: scale; to: 2 2 2; dur: 50000"
+        sampleplayback="id: #box2"
+        sound="src: #background; loop: true; positional: true; volume: 10"
+      ></a-box>
 
       <!-- Camera. -->
       <a-entity id="rig">

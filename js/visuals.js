@@ -64,7 +64,7 @@ function alterEveryOtherPath() {
     var valueTwo = getRandomNumber(21, -10);
     var randomDuration = getRandomNumber(6, 5);
     for (var j = 0; j < circleRing.length; j++) {
-      if (j % 2 == 0) {
+      if (j % 2 === 0) {
         path = [
           [0, 0, 0],
           [valueOne, valueTwo, valueOne],
