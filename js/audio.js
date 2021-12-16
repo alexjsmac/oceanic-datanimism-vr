@@ -64,8 +64,11 @@ filter.frequency.setTargetAtTime(400, "10:0", 1);
 // Kick Drum //
 
 const kickDrum = new Tone.MembraneSynth({
-  volume: 6,
+  volume: 2,
 }).toDestination();
+
+const kickDelay = new Tone.FeedbackDelay(0.125, 0.5).toDestination();
+kickDrum.connect(kickDelay);
 
 const kicks = [
   { time: "0:0" },

@@ -21,29 +21,9 @@ AFRAME.registerComponent("audiohandler", {
         console.log("Stopping playback");
         Tone.Transport.stop();
       }
+
+      let box2 = document.querySelector("#box2")
+      box2.setAttribute("animation__appear", "property: scale; to: 2 2 2; dur: 80000");
     });
   },
-});
-
-
-AFRAME.registerComponent("sampleplayback", {
-  schema: {
-    id: { default: "none" },
-  },
-  init: function() {
-    var data = this.data;
-    let playing = false;
-    let audiosource = document.querySelector(data.id);
-
-    this.el.addEventListener("click", () => {
-      if (!playing) {
-        audiosource.components.sound.playSound();
-      } else {
-        audiosource.components.sound.stopSound();
-      }
-
-      playing = !playing;
-      console.log("click event");
-    });
-  }
 });
