@@ -96,5 +96,22 @@ AFRAME.registerComponent('ocean', {
         }
         // this.mesh.geometry.verticesNeedUpdate = true; #OLD
         this.mesh.geometry.attributes.position.needsUpdate = true;
+    },
+
+    update: function (oldData) {
+        let data = this.data;
+        let el = this.el;
+
+        // If `oldData` is empty, then this means we're in the initialization process.
+        // No need to update.
+        if (Object.keys(oldData).length === 0) { return; }
+
+        // Geometry-related properties changed. Update the geometry.
+        if (data.width !== oldData.width ||
+            data.depth !== oldData.depth ||
+            data.density !== oldData.density) {
+            let geometry = new THREE.PlaneGeometry(data.width, data.depth, data.density, data.density);
+            el.getObject3D('mesh').geometry = THREE.BufferGeometryUtils.mergeVertices(geometry);
+        }
     }
 });

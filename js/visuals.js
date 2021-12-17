@@ -1,21 +1,20 @@
-var objectContainer = document.querySelector("#object-container");
+let objectContainer = document.querySelector("#object-container");
 
-var totalSteps = getRandomNumber(1, 5);
-var totalRotations = getRandomNumber(1, 10);
-
-function generateElements() {
-  for (var i = 1; i <= totalRotations; i++) {
-    var currentRotation = (360 / totalRotations) * i;
-    var rotateContainer = document.createElement("a-entity");
+function generateElements(y, y2) {
+  let totalRotations = getRandomNumber(1, y);
+  let totalSteps = getRandomNumber(1, 5);
+  for (let i = 1; i <= totalRotations; i++) {
+    let currentRotation = (360 / totalRotations) * i;
+    let rotateContainer = document.createElement("a-entity");
     rotateContainer.setAttribute("rotation", {
       x: 0,
       y: 0,
       z: currentRotation,
     });
-    for (var j = 1; j <= totalSteps; j++) {
-      var evenDistance = j / totalSteps;
-      var currentSize = j / totalSteps;
-      var circleElementContainer = document.createElement("a-entity");
+    for (let j = 1; j <= totalSteps; j++) {
+      let evenDistance = j / totalSteps;
+      let currentSize = j / totalSteps;
+      let circleElementContainer = document.createElement("a-entity");
       circleElementContainer.setAttribute(
         "class",
         "circleElementContainer" + j
@@ -25,7 +24,7 @@ function generateElements() {
         y: evenDistance,
         z: 0,
       });
-      var circleElement = document.createElement("a-entity");
+      let circleElement = document.createElement("a-entity");
       circleElement.setAttribute("class", "circleElement" + j);
       circleElement.setAttribute("scale", {
         x: currentSize,
@@ -52,14 +51,15 @@ function generateElements() {
   }
 }
 
-function alterEveryOtherPath() {
-  var path;
-  for (var i = 0; i <= totalSteps; i++) {
-    var circleRing = document.getElementsByClassName("circleElement" + i);
-    var valueOne = getRandomNumber(21, -10);
-    var valueTwo = getRandomNumber(21, -10);
-    var randomDuration = getRandomNumber(6, 5);
-    for (var j = 0; j < circleRing.length; j++) {
+function alterEveryOtherPath(y) {
+  let totalSteps = getRandomNumber(1, y);
+  let path;
+  for (let i = 0; i <= totalSteps; i++) {
+    let circleRing = document.getElementsByClassName("circleElement" + i);
+    let valueOne = getRandomNumber(21, -10);
+    let valueTwo = getRandomNumber(21, -10);
+    let randomDuration = getRandomNumber(6, 5);
+    for (let j = 0; j < circleRing.length; j++) {
       if (j % 2 === 0) {
         path = [
           [0, 0, 0],
@@ -92,15 +92,15 @@ function getRandomNumber(x, y) {
 }
 
 function getRandomColor() {
-  var varters = "0123456789abcdef";
-  var randomColor = "";
-  for (var i = 0; i < 6; i++) {
+  let varters = "0123456789abcdef";
+  let randomColor = "";
+  for (let i = 0; i < 6; i++) {
     randomColor += varters[Math.floor(Math.random() * 16)];
   }
   return "#" + randomColor;
 }
 
 function getRandomShape() {
-  var shapes = ["sphere", "octahedron", "icosahedron", "torus", "tetrahedron"];
+  let shapes = ["sphere", "octahedron", "icosahedron", "torus", "tetrahedron"];
   return shapes[Math.floor(Math.random() * shapes.length)];
 }
