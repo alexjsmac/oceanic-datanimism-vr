@@ -1,11 +1,7 @@
-var scene = document.querySelector("a-scene");
-var sky = document.querySelector("a-sky");
 var objectContainer = document.querySelector("#object-container");
 
 var totalSteps = getRandomNumber(1, 5);
 var totalRotations = getRandomNumber(1, 10);
-
-sky.setAttribute("color", "black");
 
 function generateElements() {
   for (var i = 1; i <= totalRotations; i++) {
