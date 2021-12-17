@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Techno Soundscape</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.9/Tone.js"></script>
     <script src="https://unpkg.com/aframe-alongpath-component@0.2.2/dist/aframe-alongpath-component.min.js"></script>
     <script src="js/index.js"></script>
@@ -56,7 +57,7 @@
         animation__mousedown="property: scale; to: 0 0 0; dur: 300; startEvents: mousedown"
         audiohandler="id: #box1"
       ></a-box>
-      <a-entity id="begin-text"
+      <a-entity id="mainText"
         position="-2 5 -20"
         text-geometry="value: Click to Begin"
       ></a-entity>
@@ -68,7 +69,7 @@
         rotation="0 45 45"
         scale="0 0 0"
         animation__position="property: object3D.position.y; to: -2.2; dir: alternate; dur: 2000; loop: true"
-        animation__mousedown="property: object3D.position.z; to: 1000; dur: 15000; startEvents: mousedown"
+        animation__mousedown="property: object3D.position.z; to: 1000; dur: 30000; startEvents: mousedown"
         sound="src: url(assets/sounds/151555__holymatt123__war-sounds.wav); loop: true; positional: true; volume: 10; on: click"
       ></a-box>
 
