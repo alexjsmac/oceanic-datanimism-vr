@@ -20,7 +20,7 @@ for (let i = 1; i < 7; i++) {
   });
 }
 Papa.parse(
-  "https://raw.githubusercontent.com/datasets/sea-level-rise/master/data/epa-sea-level.csv",
+  "https://raw.githubusercontent.com/datasets/sea-level-rise/master/data/sea-level-rise.csv",
   {
     header: true,
     download: true,
@@ -29,18 +29,19 @@ Papa.parse(
       let data = results.data;
       let bar = 0;
       for (let i = 0; i < data.length - 2; i++) {
-        let year = data[i]["Year"];
-        let note = Math.round((data[i]["CSIRO Adjusted Sea Level"]+1)*4);
+        let date = data[i]["Day"];
+        let note = Math.round((data[i]["sea_level_rise_average"]+19));
         let beat = (i % 2) * 2;
         if (i !== 0 && beat === 0) {
           bar += 1;
         }
         let time = bar.toString() + ":" + beat.toString();
-        mainMelody.push({year: year, time: time, note: notes[note], duration: "2n" });
+        mainMelody.push({year: date, time: time, note: notes[note], duration: "2n" });
       }
     },
   }
 );
+console.log(mainMelody);
 
 const synth = new Tone.Synth({
   oscillator: {
