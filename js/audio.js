@@ -1,4 +1,4 @@
-Tone.Transport.bpm.value = 60;
+Tone.Transport.bpm.value = 140;
 
 // Melody //
 
@@ -20,7 +20,7 @@ for (let i = 1; i < 7; i++) {
   });
 }
 Papa.parse(
-  "https://raw.githubusercontent.com/datasets/sea-level-rise/master/data/sea-level-rise.csv",
+  "https://raw.githubusercontent.com/amaclean199/webxr-sonification/main/assets/data/sea-level-rise.csv",
   {
     header: true,
     download: true,
@@ -28,9 +28,10 @@ Papa.parse(
     complete: function (results) {
       let data = results.data;
       let bar = 0;
-      for (let i = 0; i < data.length - 2; i++) {
-        let date = data[i]["Day"];
-        let note = Math.round((data[i]["sea_level_rise_average"]+19));
+      const split = 3;
+      for (let i = 0; i < data.length/split; i++) {
+        let date = data[i*split]["Day"];
+        let note = Math.round((data[i*split]["sea_level_rise_average"]/10+20));
         let beat = (i % 2) * 2;
         if (i !== 0 && beat === 0) {
           bar += 1;
@@ -50,12 +51,12 @@ const synth = new Tone.Synth({
     spread: 40,
     type: "fatsawtooth",
   },
-})
+});
 const filter = new Tone.Filter(400, 'lowpass').toDestination();
-const feedbackDelay = new Tone.FeedbackDelay(0.25, 0.75).toDestination();
+// const feedbackDelay = new Tone.FeedbackDelay(0.25, 0.75).toDestination();
 
 synth.connect(filter);
-filter.connect(feedbackDelay);
+// filter.connect(feedbackDelay);
 
 filter.frequency.setTargetAtTime(1000, "2:0", 2);
 filter.frequency.setTargetAtTime(400, "4:0", 2);
@@ -66,10 +67,11 @@ filter.frequency.setTargetAtTime(400, "10:0", 1);
 
 const kickDrum = new Tone.MembraneSynth({
   volume: 2,
-}).toDestination();
+});
 
-const kickDelay = new Tone.FeedbackDelay(0.125, 0.5).toDestination();
-kickDrum.connect(kickDelay);
+const kickFilter = new Tone.Filter(250, 'highpass').toDestination();
+// const kickDelay = new Tone.FeedbackDelay(0.125, 0.5).toDestination();
+kickDrum.connect(kickFilter);
 
 const kicks = [
   { time: "0:0" },
@@ -126,9 +128,8 @@ const snareDrum = new Tone.NoiseSynth({
   },
 }).connect(lowPass);
 
-const snareDelay = new Tone.FeedbackDelay(0.25, 0.75).toDestination();
-
-lowPass.connect(snareDelay);
+// const snareDelay = new Tone.FeedbackDelay(0.25, 0.75).toDestination();
+// lowPass.connect(snareDelay);
 
 const snares = [
   { time: '10:2' },
@@ -144,3 +145,11 @@ const snares = [
 const snarePart = new Tone.Part(function(time){
   snareDrum.triggerAttackRelease('4n', time)
 }, snares).start(0);
+
+const fadeOut = [
+  {time: '94:0'}
+]
+const fadeOutStart = new Tone.Part(function(time){
+  let fader = document.querySelector('#lord-fader');
+  fader.setAttribute('material', 'visible: true; shader: flat; color: black; opacity: 1.0; side: double');
+}, fadeOut).start(0);
