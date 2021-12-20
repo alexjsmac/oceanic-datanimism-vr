@@ -24,7 +24,7 @@ AFRAME.registerComponent("audiohandler", {
       // Initiate flying spheres
       generateElements(maxSpheres, maxSpheres-5);
       alterEveryOtherPath(maxSpheres-5);
-      maxSpheres += 5;
+      maxSpheres += 2;
 
       if (Tone.Transport.state !== "started") {
         console.log("Starting playback");
