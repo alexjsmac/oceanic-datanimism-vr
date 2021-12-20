@@ -10,7 +10,7 @@ let sampleOrder = {
   "#box9": "#box10"
 };
 
-let maxSpheres = 10;
+let maxSphereRotations = 5;
 
 AFRAME.registerComponent("audiohandler", {
   schema: {
@@ -22,9 +22,10 @@ AFRAME.registerComponent("audiohandler", {
       let text = document.querySelector("#mainText");
 
       // Initiate flying spheres
-      generateElements(maxSpheres, maxSpheres-5);
-      alterEveryOtherPath(maxSpheres-5);
-      maxSpheres += 2;
+      let maxSteps = maxSphereRotations - 4;
+      generateElements(maxSphereRotations, maxSteps);
+      alterEveryOtherPath(maxSteps);
+      maxSphereRotations += 2;
 
       if (Tone.Transport.state !== "started") {
         console.log("Starting playback");

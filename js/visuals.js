@@ -2,7 +2,7 @@ let objectContainer = document.querySelector("#object-container");
 
 function generateElements(y, y2) {
   let totalRotations = getRandomNumber(1, y);
-  let totalSteps = getRandomNumber(1, 5);
+  let totalSteps = getRandomNumber(1, y2);
   for (let i = 1; i <= totalRotations; i++) {
     let currentRotation = (360 / totalRotations) * i;
     let rotateContainer = document.createElement("a-entity");
