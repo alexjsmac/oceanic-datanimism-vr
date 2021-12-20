@@ -25,7 +25,7 @@ AFRAME.registerComponent("audiohandler", {
       let maxSteps = maxSphereRotations - 4;
       generateElements(maxSphereRotations, maxSteps);
       alterEveryOtherPath(maxSteps);
-      maxSphereRotations += 2;
+      maxSphereRotations++;
 
       if (Tone.Transport.state !== "started") {
         console.log("Starting playback");
