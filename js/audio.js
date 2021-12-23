@@ -54,15 +54,22 @@ const synth = new Tone.Synth({
   },
 });
 const filter = new Tone.Filter(400, 'lowpass').toDestination();
-// const feedbackDelay = new Tone.FeedbackDelay(0.25, 0.75).toDestination();
+const reverb = new Tone.Reverb(3).toDestination();
 
 synth.connect(filter);
-// filter.connect(feedbackDelay);
+filter.connect(reverb);
 
 filter.frequency.setTargetAtTime(1000, "2:0", 2);
 filter.frequency.setTargetAtTime(400, "4:0", 2);
 filter.frequency.setTargetAtTime(1500, "8:0", 1);
 filter.frequency.setTargetAtTime(400, "10:0", 1);
+filter.frequency.setTargetAtTime(2000, "26:0", 1);
+filter.frequency.setTargetAtTime(500, "34:0", 2);
+filter.frequency.setTargetAtTime(2500, "42:0", 1);
+filter.frequency.setTargetAtTime(600, "50:0", 1);
+filter.frequency.setTargetAtTime(3000, "68:0", 3);
+filter.frequency.setTargetAtTime(1000, "80:0", 2);
+filter.frequency.setTargetAtTime(6000, "85:0", 4);
 
 // Kick Drum //
 
@@ -94,7 +101,7 @@ const kicks = [
 ];
 
 let fullKicks = Array();
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 11; i++) {
   kicks.forEach((element) => {
     let time = element.time;
     let timeNumbers = time.split(":");
@@ -105,6 +112,7 @@ for (let i = 0; i < 8; i++) {
     fullKicks.push({ time: time });
   });
 }
+console.log(fullKicks);
 
 const kickPart = new Tone.Part(function (time) {
   kickDrum.triggerAttackRelease("C1", "8n", time);
@@ -143,9 +151,23 @@ const snares = [
   { time: '17:2' },
 ]
 
+let fullSnares = Array();
+for (let i = 0; i < 5; i++) {
+  snares.forEach((element) => {
+    let time = element.time;
+    let timeNumbers = time.split(":");
+    let bar = parseInt(timeNumbers[0]);
+    bar = bar + 16 * i;
+    timeNumbers = timeNumbers.slice(1);
+    time = bar + ":" + timeNumbers.join(":");
+    fullSnares.push({ time: time });
+  });
+}
+console.log(fullSnares);
+
 const snarePart = new Tone.Part(function(time){
   snareDrum.triggerAttackRelease('4n', time)
-}, snares).start(0);
+}, fullSnares).start(0);
 
 const fadeOut = [
   {time: '94:0'}
